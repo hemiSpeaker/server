@@ -61,4 +61,4 @@ while i == True :
     client.send_message("/speaker_3", int(speaker_3_Volume))
     client.send_message("/speaker_4", int(speaker_4_Volume))
 
-    time.sleep(0.4)
+    time.sleep(0.1)
