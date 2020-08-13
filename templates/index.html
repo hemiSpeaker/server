@@ -36,10 +36,13 @@
     <div class="container">
         <form class="col-md-12">
             <div class="">
-                <p>Speaker 1</p>
+                <p>Speaker 0</p>
                 <form class="range-field">
-                  <input id="speaker_1"" type="range" min="0" max="127" />
+                  <input id="speaker_0"" type="range" min="0" max="127" />
                 </form>
+                <span class="font-weight-bold text-primary ml-2 mt-1 speaker_0"></span>
+                <p>Speaker 1</p>
+                <input id="speaker_1"" type="range" min="0" max="127" />
                 <span class="font-weight-bold text-primary ml-2 mt-1 speaker_1"></span>
                 <p>Speaker 2</p>
                 <input id="speaker_2"" type="range" min="0" max="127" />
@@ -50,9 +53,6 @@
                 <p>Speaker 4</p>
                 <input id="speaker_4"" type="range" min="0" max="127" />
                 <span class="font-weight-bold text-primary ml-2 mt-1 speaker_4"></span>
-                <p>Speaker 5</p>
-                <input id="speaker_5"" type="range" min="0" max="127" />
-                <span class="font-weight-bold text-primary ml-2 mt-1 speaker_5"></span>
             </div>
         </form>
     </div>
@@ -63,6 +63,17 @@
         var apiUrl = "http://127.0.0.1:5000/api/volume/";
 
         $(document).ready(function () {
+            const $spanSpeaker_0 = $('.speaker_0');
+            const $speaker_0_Value = $('#speaker_0');
+            $spanSpeaker_0.html($speaker_0_Value.val());
+            $speaker_0_Value.on('input change', () => {
+                $spanSpeaker_0.html($speaker_0_Value.val());
+                console.log($speaker_0_Value.val())
+                $.post(apiUrl+'speaker_0', {value : $speaker_0_Value.val()});
+                
+            });
+
+
             const $spanSpeaker_1 = $('.speaker_1');
             const $speaker_1_Value = $('#speaker_1');
             $spanSpeaker_1.html($speaker_1_Value.val());
@@ -72,7 +83,6 @@
                 $.post(apiUrl+'speaker_1', {value : $speaker_1_Value.val()});
                 
             });
-
 
             const $spanSpeaker_2 = $('.speaker_2');
             const $speaker_2_Value = $('#speaker_2');
@@ -94,6 +104,7 @@
                 
             });
 
+
             const $spanSpeaker_4 = $('.speaker_4');
             const $speaker_4_Value = $('#speaker_4');
             $spanSpeaker_4.html($speaker_4_Value.val());
@@ -103,44 +114,6 @@
                 $.post(apiUrl+'speaker_4', {value : $speaker_4_Value.val()});
                 
             });
-
-
-            const $spanSpeaker_5 = $('.speaker_5');
-            const $speaker_5_Value = $('#speaker_5');
-            $spanSpeaker_5.html($speaker_5_Value.val());
-            $speaker_5_Value.on('input change', () => {
-                $spanSpeaker_5.html($speaker_5_Value.val());
-                console.log($speaker_5_Value.val())
-                $.post(apiUrl+'speaker_5', {value : $speaker_5_Value.val()});
-                
-            });
-            
-
-            $("#send").click(function () {
-                console.log('SENDING MESSAGE');
-                var chat = $('#message').val();
-                message = {
-                    message: chat
-                }
-                console.log(message)
-                $.post(apiUrl, message,
-                    function (data, status, jqXHR) {
-                        $('#history').append('YOU : ' + chat + '<br>');
-                        $('#history').append('VOCOBOT : ' + data + '<br>');
-                    })
-
-                $('#message').val('');
-            });
-            $('#message').keypress(function (e) {
-                var key = e.which;
-                if (key == 13) // the enter key code
-                {
-                    $('#send').click();
-                    return false;
-                }
-            });
-
-
 
         });
     </script>
