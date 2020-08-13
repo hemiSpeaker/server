@@ -104,7 +104,18 @@ def speaker_4():
 
 
       return "HELLO"
-        
+
+
+@app.route('/api/volume/panPos',methods = ['POST'])
+def speaker_1():
+   if request.method == 'POST':
+      message = request.form.get("value")
+      #message = message["message"]
+      print(message)
+      client.send_message("/speaker_1", int(message))
+
+
+      return "HELLO" 
 
 if __name__ == '__main__':
    app.run(host='0.0.0.0', port=5000)

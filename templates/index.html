@@ -59,6 +59,10 @@
                 <p>Position</p>
                 <input id="pan_pos"" type="range" min="0" max="200" />
                 <span class="font-weight-bold text-primary ml-2 mt-1 pan_pos"></span>
+            <h1>Pan PYTHON</h1>
+            <p>Position</p>
+            <input id="pan_python"" type="range" min="0" max="200" />
+            <span class="font-weight-bold text-primary ml-2 mt-1 pan_python"></span>
         </form>
     </div>
 
@@ -90,7 +94,7 @@
                 });
             }
 
-            function speakerPan(panInput) {
+            /*function speakerPan(panInput) {
 
 
                 speaker_0 = 0
@@ -146,12 +150,22 @@
                     console.log("speaker_3 :" + speaker_3_Volume)
                     console.log("speaker_4 :" + speaker_4_Volume)
 
-                    /*$.post(apiUrl+panPos, {
-                            value : $panPosVal.val()
-                            console.log($panPosVal)
-                        });*/
                 });
-            }
+            }*/
+            function speakerPan(panInput) {
+                const panPos = $('.'+ panInput);
+                const panPosVal = $('#' + panInput);
+                panPos.html(panPosVal.val());
+                panPosVal.on('input change', () => {
+                    panPos.html(panPosVal.val());
+                    console.log(panPosVal.val())
+
+                    $.post(apiUrl+"panPos", {
+                            value : panPosVal.val()
+                    });
+                
+                });
+                }
 
         });
     </script>
