@@ -18,7 +18,7 @@ i = True
 position = 0
 
 
-
+koukou
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--ip", default="192.168.1.18",
