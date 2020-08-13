@@ -17,11 +17,21 @@ from pythonosc import udp_client
 import argparse
 import random
 import time
+
+
+import json
+
+# Getting configuration params
+with open('config.json') as json_data_file:
+    conf = json.load(json_data_file)
+
+client_ip = conf["client_ip"]
+
 #run_with_ngrok(app)  # Start ngrok when app is run
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ip", default="192.168.1.18",
+    parser.add_argument("--ip", default=client_ip,
         help="The ip of the OSC server")
     parser.add_argument("--port", type=int, default=8050,
         help="The port the OSC server is listening on")
@@ -29,7 +39,7 @@ if __name__ == "__main__":
 
     client = udp_client.SimpleUDPClient(args.ip, args.port)
 
-
+print("Osc server sending to : " + client_ip + " adress")
 
 @app.route('/<string:page_name>/')
 def render_static(page_name):
