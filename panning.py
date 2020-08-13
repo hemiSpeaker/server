@@ -7,6 +7,13 @@ from pythonosc import udp_client
 
 import argparse
 
+def distance(x, y):
+    if x >= y:
+        result = x - y
+    else:
+        result = y - x
+    return result
+
 speaker_0 = 0
 speaker_1 = 50
 speaker_2 = 100
@@ -42,11 +49,12 @@ while i == True :
     position += 1
     if position == 200:
         position = 0
-    speaker_0_Volume = maxVolume - position - speaker_0
-    speaker_1_Volume = maxVolume - position - speaker_1
-    speaker_2_Volume = maxVolume - position - speaker_2
-    speaker_3_Volume = maxVolume - position - speaker_3
-    speaker_4_Volume = maxVolume - position - speaker_4
+
+    speaker_0_Volume = maxVolume - distance(position, speaker_0)
+    speaker_1_Volume = maxVolume - distance(position, speaker_1)
+    speaker_2_Volume = maxVolume - distance(position, speaker_2)
+    speaker_3_Volume = maxVolume - distance(position, speaker_3)
+    speaker_4_Volume = maxVolume - distance(position, speaker_4)
 
     print("speaker_0 :" + str(speaker_0_Volume))
     print("speaker_1 :" + str(speaker_1_Volume))
@@ -61,4 +69,4 @@ while i == True :
     client.send_message("/speaker_3", int(speaker_3_Volume))
     client.send_message("/speaker_4", int(speaker_4_Volume))
 
-    time.sleep(0.1)
+    time.sleep(0.01)
