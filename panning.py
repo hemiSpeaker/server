@@ -50,11 +50,11 @@ while i == True :
     if position == 200:
         position = 0
 
-    speaker_0_Volume = maxVolume - distance(position, speaker_0)
-    speaker_1_Volume = maxVolume - distance(position, speaker_1)
-    speaker_2_Volume = maxVolume - distance(position, speaker_2)
-    speaker_3_Volume = maxVolume - distance(position, speaker_3)
-    speaker_4_Volume = maxVolume - distance(position, speaker_4)
+    speaker_0_Volume = maxVolume - abs(position - speaker_0)
+    speaker_1_Volume = maxVolume - abs(position - speaker_1)
+    speaker_2_Volume = maxVolume - abs(position - speaker_2)
+    speaker_3_Volume = maxVolume - abs(position - speaker_3)
+    speaker_4_Volume = maxVolume - abs(position - speaker_4)
 
     print("speaker_0 :" + str(speaker_0_Volume))
     print("speaker_1 :" + str(speaker_1_Volume))
