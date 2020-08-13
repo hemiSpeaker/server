@@ -45,6 +45,22 @@ print("Osc server sending to : " + client_ip + " adress")
 def render_static(page_name):
     return render_template('%s.html' % page_name)
 
+@app.route('/api/volume/speaker_0',methods = ['POST'])
+def speaker_0():
+   if request.method == 'POST':
+      message = request.form.get("value")
+      #message = message["message"]
+      print(message)
+      client.send_message("/speaker_0", int(message))
+      #client.send_message("/speaker_1", 0)
+      #client.send_message("/speaker_2", 0)
+      client.send_message("/speaker_3", 0)
+      client.send_message("/speaker_4", 0)
+
+
+      return "HELLO"
+
+
 @app.route('/api/volume/speaker_1',methods = ['POST'])
 def speaker_1():
    if request.method == 'POST':
@@ -52,14 +68,9 @@ def speaker_1():
       #message = message["message"]
       print(message)
       client.send_message("/speaker_1", int(message))
-      #client.send_message("/speaker_2", 0)
-      #client.send_message("/speaker_3", 0)
-      client.send_message("/speaker_4", 0)
-      client.send_message("/speaker_5", 0)
 
 
       return "HELLO"
-
 
 @app.route('/api/volume/speaker_2',methods = ['POST'])
 def speaker_2():
@@ -90,17 +101,6 @@ def speaker_4():
       #message = message["message"]
       print(message)
       client.send_message("/speaker_4", int(message))
-
-
-      return "HELLO"
-
-@app.route('/api/volume/speaker_5',methods = ['POST'])
-def speaker_5():
-   if request.method == 'POST':
-      message = request.form.get("value")
-      #message = message["message"]
-      print(message)
-      client.send_message("/speaker_5", int(message))
 
 
       return "HELLO"
