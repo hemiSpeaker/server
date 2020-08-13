@@ -35,25 +35,30 @@
 
     <div class="container">
         <form class="col-md-12">
+            <h1>Volume</h1>
             <div class="">
                 <p>Speaker 0</p>
                 <form class="range-field">
-                  <input id="speaker_0"" type="range" min="0" max="127" />
+                  <input id="speaker_0"" type="range" min="0" max="200" />
                 </form>
                 <span class="font-weight-bold text-primary ml-2 mt-1 speaker_0"></span>
                 <p>Speaker 1</p>
-                <input id="speaker_1"" type="range" min="0" max="127" />
+                <input id="speaker_1"" type="range" min="0" max="200" />
                 <span class="font-weight-bold text-primary ml-2 mt-1 speaker_1"></span>
                 <p>Speaker 2</p>
-                <input id="speaker_2"" type="range" min="0" max="127" />
+                <input id="speaker_2"" type="range" min="0" max="200" />
                 <span class="font-weight-bold text-primary ml-2 mt-1 speaker_2"></span>
                 <p>Speaker 3</p>
-                <input id="speaker_3"" type="range" min="0" max="127" />
+                <input id="speaker_3"" type="range" min="0" max="200" />
                 <span class="font-weight-bold text-primary ml-2 mt-1 speaker_3"></span>
                 <p>Speaker 4</p>
-                <input id="speaker_4"" type="range" min="0" max="127" />
+                <input id="speaker_4"" type="range" min="0" max="200" />
                 <span class="font-weight-bold text-primary ml-2 mt-1 speaker_4"></span>
             </div>
+            <h1>Pan</h1>
+                <p>Position</p>
+                <input id="pan_pos"" type="range" min="0" max="200" />
+                <span class="font-weight-bold text-primary ml-2 mt-1 pan_pos"></span>
         </form>
     </div>
    
@@ -63,57 +68,90 @@
         var apiUrl = "http://127.0.0.1:5000/api/volume/";
 
         $(document).ready(function () {
-            const $spanSpeaker_0 = $('.speaker_0');
-            const $speaker_0_Value = $('#speaker_0');
-            $spanSpeaker_0.html($speaker_0_Value.val());
-            $speaker_0_Value.on('input change', () => {
-                $spanSpeaker_0.html($speaker_0_Value.val());
-                console.log($speaker_0_Value.val())
-                $.post(apiUrl+'speaker_0', {value : $speaker_0_Value.val()});
-                
-            });
+
+           
+            speakerVol("speaker_0")
+            speakerVol("speaker_1")
+            speakerVol("speaker_2")
+            speakerVol("speaker_3")
+            speakerVol("speaker_4")
+            speakerPan("pan_pos")
+
+            function speakerVol(speakerName) {
+                const spanSpeaker = $('.'+ speakerName);
+                const speakerValue = $('#' + speakerName);
+                spanSpeaker.html(speakerValue.val());
+                speakerValue.on('input change', () => {
+                    spanSpeaker.html(speakerValue.val());
+                    console.log(speakerValue.val())
+                    $.post(apiUrl+speakerName, {
+                            value : speakerValue.val()
+                        });
+                });
+            }
+
+            function speakerPan(panInput) {
 
 
-            const $spanSpeaker_1 = $('.speaker_1');
-            const $speaker_1_Value = $('#speaker_1');
-            $spanSpeaker_1.html($speaker_1_Value.val());
-            $speaker_1_Value.on('input change', () => {
-                $spanSpeaker_1.html($speaker_1_Value.val());
-                console.log($speaker_1_Value.val())
-                $.post(apiUrl+'speaker_1', {value : $speaker_1_Value.val()});
-                
-            });
+                speaker_0 = 0
+                speaker_1 = 50
+                speaker_2 = 100
+                speaker_3 = 150
+                speaker_4 = 200
 
-            const $spanSpeaker_2 = $('.speaker_2');
-            const $speaker_2_Value = $('#speaker_2');
-            $spanSpeaker_2.html($speaker_2_Value.val());
-            $speaker_2_Value.on('input change', () => {
-                $spanSpeaker_2.html($speaker_2_Value.val());
-                console.log($speaker_2_Value.val())
-                $.post(apiUrl+'speaker_2', {value : $speaker_2_Value.val()});
-                
-            });
+                speaker_0_Volume = 0
+                speaker_1_Volume = 0
+                speaker_2_Volume = 0
+                speaker_3_Volume = 0
+                speaker_4_Volume = 0
 
-            const $spanSpeaker_3 = $('.speaker_3');
-            const $speaker_3_Value = $('#speaker_3');
-            $spanSpeaker_3.html($speaker_3_Value.val());
-            $speaker_3_Value.on('input change', () => {
-                $spanSpeaker_3.html($speaker_3_Value.val());
-                console.log($speaker_3_Value.val())
-                $.post(apiUrl+'speaker_3', {value : $speaker_3_Value.val()});
-                
-            });
+                maxVolume = 200
+                const panPos = $('.'+ panInput);
+                const panPosVal = $('#' + panInput);
+                panPos.html(panPosVal.val());
+                panPosVal.on('input change', () => {
+                    panPos.html(panPosVal.val());
+                    console.log(panPosVal.val())
 
+                    position = panPosVal.val()
+                    
+                    if (position == 200) {
+                        position = 0
+                    }
+                        
+                    speaker_0_Volume = maxVolume - position - speaker_0
+                    speaker_1_Volume = maxVolume - position - speaker_1
+                    speaker_2_Volume = maxVolume - position - speaker_2
+                    speaker_3_Volume = maxVolume - position - speaker_3
+                    speaker_4_Volume = maxVolume - position - speaker_4
+                    $.post(apiUrl+"speaker_0", {
+                            value : speaker_0_Volume
+                    });
+                    $.post(apiUrl+"speaker_1", {
+                            value : speaker_1_Volume
+                    });
+                    $.post(apiUrl+"speaker_2", {
+                            value : speaker_2_Volume
+                    });
+                    $.post(apiUrl+"speaker_3", {
+                            value : speaker_3_Volume
+                    });
+                    $.post(apiUrl+"speaker_4", {
+                            value : speaker_4_Volume
+                    });
 
-            const $spanSpeaker_4 = $('.speaker_4');
-            const $speaker_4_Value = $('#speaker_4');
-            $spanSpeaker_4.html($speaker_4_Value.val());
-            $speaker_4_Value.on('input change', () => {
-                $spanSpeaker_4.html($speaker_4_Value.val());
-                console.log($speaker_4_Value.val())
-                $.post(apiUrl+'speaker_4', {value : $speaker_4_Value.val()});
-                
-            });
+                    console.log("speaker_0 :" + speaker_0_Volume)
+                    console.log("speaker_1 :" + speaker_1_Volume)
+                    console.log("speaker_2 :" + speaker_2_Volume)
+                    console.log("speaker_3 :" + speaker_3_Volume)
+                    console.log("speaker_4 :" + speaker_4_Volume)
+
+                    /*$.post(apiUrl+panPos, {
+                            value : $panPosVal.val()
+                            console.log($panPosVal)
+                        });*/
+                });
+            }
 
         });
     </script>
