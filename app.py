@@ -106,13 +106,46 @@ def speaker_4():
       return "HELLO"
 
 
+speaker_0 = 0
+speaker_1 = 50
+speaker_2 = 100
+speaker_3 = 150
+speaker_4 = 200
+
+speaker_0_Volume = 0
+speaker_1_Volume = 0
+speaker_2_Volume = 0
+speaker_3_Volume = 0
+speaker_4_Volume = 0
+
+maxVolume = 200 ## distance?
+
+
 @app.route('/api/volume/panPos',methods = ['POST'])
-def speaker_1():
+def panPos():
    if request.method == 'POST':
       message = request.form.get("value")
       #message = message["message"]
+      position = int(message)
       print(message)
-      client.send_message("/speaker_1", int(message))
+      speaker_0_Volume = maxVolume - abs(position - speaker_0)
+      speaker_1_Volume = maxVolume - abs(position - speaker_1)
+      speaker_2_Volume = maxVolume - abs(position - speaker_2)
+      speaker_3_Volume = maxVolume - abs(position - speaker_3)
+      speaker_4_Volume = maxVolume - abs(position - speaker_4)
+
+      print("speaker_0 :" + str(speaker_0_Volume))
+      print("speaker_1 :" + str(speaker_1_Volume))
+      print("speaker_2 :" + str(speaker_2_Volume))
+      print("speaker_3 :" + str(speaker_3_Volume))
+      print("speaker_4 :" + str(speaker_4_Volume))
+
+
+      client.send_message("/speaker_0", int(speaker_0_Volume))
+      client.send_message("/speaker_1", int(speaker_1_Volume))
+      client.send_message("/speaker_2", int(speaker_2_Volume))
+      client.send_message("/speaker_3", int(speaker_3_Volume))
+      client.send_message("/speaker_4", int(speaker_4_Volume))
 
 
       return "HELLO" 
