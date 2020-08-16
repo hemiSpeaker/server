@@ -59,10 +59,9 @@
                 <p>Position</p>
                 <input id="pan_pos"" type="range" min="0" max="200" />
                 <span class="font-weight-bold text-primary ml-2 mt-1 pan_pos"></span>
-            <h1>Pan PYTHON</h1>
-            <p>Position</p>
-            <input id="pan_python"" type="range" min="0" max="200" />
-            <span class="font-weight-bold text-primary ml-2 mt-1 pan_python"></span>
+            <p>Distance</p>
+            <input id="dist_pos"" type="range" min="0" max="200" />
+            <span class="font-weight-bold text-primary ml-2 mt-1 dist_pos"></span>
         </form>
     </div>
 
@@ -94,64 +93,6 @@
                 });
             }
 
-            /*function speakerPan(panInput) {
-
-
-                speaker_0 = 0
-                speaker_1 = 50
-                speaker_2 = 100
-                speaker_3 = 150
-                speaker_4 = 200
-
-                speaker_0_Volume = 0
-                speaker_1_Volume = 0
-                speaker_2_Volume = 0
-                speaker_3_Volume = 0
-                speaker_4_Volume = 0
-
-                maxVolume = 400
-                const panPos = $('.'+ panInput);
-                const panPosVal = $('#' + panInput);
-                panPos.html(panPosVal.val());
-                panPosVal.on('input change', () => {
-                    panPos.html(panPosVal.val());
-                    console.log(panPosVal.val())
-
-                    position = panPosVal.val()
-
-                    if (position == 200) {
-                        position = 0
-                    }
-
-                    speaker_0_Volume = maxVolume - Math.abs(position - speaker_0)
-                    speaker_1_Volume = maxVolume - Math.abs(position - speaker_1)
-                    speaker_2_Volume = maxVolume - Math.abs(position - speaker_2)
-                    speaker_3_Volume = maxVolume - Math.abs(position - speaker_3)
-                    speaker_4_Volume = maxVolume - Math.abs(position - speaker_4)
-                    $.post(apiUrl+"speaker_0", {
-                            value : speaker_0_Volume
-                    });
-                    $.post(apiUrl+"speaker_1", {
-                            value : speaker_1_Volume
-                    });
-                    $.post(apiUrl+"speaker_2", {
-                            value : speaker_2_Volume
-                    });
-                    $.post(apiUrl+"speaker_3", {
-                            value : speaker_3_Volume
-                    });
-                    $.post(apiUrl+"speaker_4", {
-                            value : speaker_4_Volume
-                    });
-
-                    console.log("speaker_0 :" + speaker_0_Volume)
-                    console.log("speaker_1 :" + speaker_1_Volume)
-                    console.log("speaker_2 :" + speaker_2_Volume)
-                    console.log("speaker_3 :" + speaker_3_Volume)
-                    console.log("speaker_4 :" + speaker_4_Volume)
-
-                });
-            }*/
             function speakerPan(panInput) {
                 const panPos = $('.'+ panInput);
                 const panPosVal = $('#' + panInput);
@@ -165,7 +106,20 @@
                     });
                 
                 });
-                }
+            }
+
+            function speakerDist(distPos) {
+                const spanSpeaker = $('.'+ distPos);
+                const speakerValue = $('#' + distPos);
+                spanSpeaker.html(speakerValue.val());
+                speakerValue.on('input change', () => {
+                    spanSpeaker.html(speakerValue.val());
+                    console.log(speakerValue.val())
+                    $.post(apiUrl+distPos, {
+                            value : speakerValue.val()
+                        });
+                });
+            }
 
         });
     </script>
